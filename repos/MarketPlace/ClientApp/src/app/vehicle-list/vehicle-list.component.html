@@ -1,0 +1,47 @@
+<h2>Add Vehicle</h2>
+<p *ngIf="auth.authenticated()">
+  <a [routerLink]="['/vehicles/new']" class="btn btn-primary">Add Vehicle</a>
+</p>
+
+<div class="well">
+  <div class="form-group">
+    <label for="manufacturer">Manufacturer</label>
+    <select id="manufacturer" class="form-control" (change)="onFilterChange()" [(ngModel)]="query.manufacturerId">
+      <option value=""></option>
+      <option *ngFor="let m of manufacturers" value="{{m.id}}">{{m.name}}</option>
+    </select>
+  </div>
+  <button class="btn btn-default" (click)="resetFilter()">Reset</button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let c of columns">
+        <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+          {{c.title}}
+          <i *ngIf="query.sortBy === c.key"
+             class="fa"
+             [class.fa-sort-asc]="query.isSortAscending"
+             [class.fa-sort-desc]="!query.isSortAscending">
+          </i>
+        </div>
+        <div *ngIf="!c.isSortable">
+          {{c.title}}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let v of queryResult.items">
+      <td>{{v.id}}</td>
+      <td>{{v.manufacturer.name}}</td>
+      <td>{{v.vehicle.name}}</td>
+      <td>{{v.contact.name}}</td>
+      <td>
+        <a [routerLink]="['/vehicles/', v.id]">View</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
