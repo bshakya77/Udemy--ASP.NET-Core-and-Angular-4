@@ -37,7 +37,7 @@
     "ng2-toasty": "^2.5.0",
     "raven-js": "^3.27.2",
     "rxjs": "^5.5.6",
-    "underscore": "^1.10.2",
+    "underscore": "^1.12.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
